@@ -1,5 +1,6 @@
 package io.github.raveenita.AccessAPI.adapter.entities;
 
+import io.github.raveenita.AccessAPI.core.domain.Person;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -21,7 +22,7 @@ public class UserEntity {
 
     @OneToOne
     @JoinColumn(name = "person_id")
-    private PersonEntity personEntity;
+    private Person person;
 
 
 }

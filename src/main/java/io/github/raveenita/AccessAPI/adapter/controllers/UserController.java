@@ -5,7 +5,6 @@ import io.github.raveenita.AccessAPI.adapter.dtos.UserDTO;
 import io.github.raveenita.AccessAPI.core.domain.User;
 import io.github.raveenita.AccessAPI.core.ports.UserServicePort;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 

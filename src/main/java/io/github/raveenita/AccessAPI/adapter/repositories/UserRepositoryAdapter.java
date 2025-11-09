@@ -13,32 +13,26 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class UserRepositoryAdapter implements UserRepositoryPort {
     private final UserRepository userRepository;
-    private final PersonRepository personRepository;
+    private final PersonRepositoryAdapter personRepository;
     private final ModelMapper modelMapper;
 
     @Override
     public User create(User user) {
-        PersonEntity personEntityMap = modelMapper.map(user, PersonEntity.class);
-        PersonEntity personEntity = personRepository.save(personEntityMap);
-
         UserEntity userEntity = modelMapper.map(user, UserEntity.class);
-        userEntity.setPersonEntity(personEntity);
-
+        userEntity.setPerson(personRepository.createPerson(userEntity.getPerson()));
         UserEntity newUser = userRepository.save(userEntity);
 
         return modelMapper.map(newUser, User.class);
     }
 
     @Override
-    public User obtainByEmail(String email) {
+    public User findByEmail(String email) {
         UserEntity userByEmail = userRepository.findByEmail(email);
 
+        if (userByEmail == null){
+            return null;
+        }
+
         return modelMapper.map(userByEmail, User.class);
-    }
-
-    private PersonEntity createPerson(Person person) {
-        PersonEntity personEntity = modelMapper.map(person, PersonEntity.class);
-
-        return personRepository.save(personEntity);
     }
 }
